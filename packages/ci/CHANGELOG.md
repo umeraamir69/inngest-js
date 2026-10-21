@@ -1,5 +1,13 @@
 # @inngest/ci
 
+## 0.6.1
+
+### Patch Changes
+
+- [#1828](https://github.com/inngest/inngest-js/pull/1828) [`0e147b32`](https://github.com/inngest/inngest-js/commit/0e147b324a27ad0f0e90735724709f60936f1876) Thanks [@jpwilliams](https://github.com/jpwilliams)! - CI machines always resolve `localhost`.
+
+- [#1828](https://github.com/inngest/inngest-js/pull/1828) [`0e147b32`](https://github.com/inngest/inngest-js/commit/0e147b324a27ad0f0e90735724709f60936f1876) Thanks [@jpwilliams](https://github.com/jpwilliams)! - Commit statuses for failed jobs now include the last line of the command's error output, so you can see why a job failed without opening the run. Failed commands also log their error output in the run trace.
+
 ## 0.6.0
 
 ### Minor Changes

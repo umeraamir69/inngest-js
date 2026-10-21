@@ -1,5 +1,36 @@
 # inngest
 
+## 4.26.0
+
+### Minor Changes
+
+- [#1764](https://github.com/inngest/inngest-js/pull/1764) [`37ffe071`](https://github.com/inngest/inngest-js/commit/37ffe071e3c42c814f4a73e819320523340489ea) Thanks [@rhino1998](https://github.com/rhino1998)! - Write scores as one `inngest.score.<name>` metadata kind per score name (values `{ value }`) and SDK warnings as one `inngest.warning.<code>` kind per warning code, both sent as `set`.
+
+  `score.experiment()` no longer accepts `stepId`. Experiment scores must be run-scoped, which the REST API already enforces. `createScorer()` ignores (and warns about) a returned `stepId` when the parent was deferred with an experiment, so those scores land on the run where the experiment view reads them.
+
+  Requires an Inngest server (self-hosted or dev server) that accepts per-name score and warning kinds (inngest/inngest#4992). Older servers reject these kinds when they're sent via the API (with a 400) or with a checkpointed step, so those scores and warnings are lost.
+
+- [#1825](https://github.com/inngest/inngest-js/pull/1825) [`eceb780a`](https://github.com/inngest/inngest-js/commit/eceb780afb11e42c208a12b017602cc6fc068755) Thanks [@jpwilliams](https://github.com/jpwilliams)! - You can now hand your sandbox tools straight to a model with `toolDefinitions(tools)`. It returns each tool's name, description and JSON Schema in the shape Anthropic's `tools` parameter takes, with no need to convert Zod schemas yourself.
+
+  ```ts
+  import { toolDefinitions } from "inngest/experimental";
+
+  await anthropic.messages.create({
+    model,
+    max_tokens: 1024,
+    messages,
+    tools: toolDefinitions({ getCustomer }),
+  });
+  ```
+
+### Patch Changes
+
+- [#1827](https://github.com/inngest/inngest-js/pull/1827) [`3d222069`](https://github.com/inngest/inngest-js/commit/3d2220696cbedf252e3b09673b27c52fb8b7d2ef) Thanks [@jpwilliams](https://github.com/jpwilliams)! - Sandbox commands show as one `[$]` row each in traces.
+
+- [#1823](https://github.com/inngest/inngest-js/pull/1823) [`0039df55`](https://github.com/inngest/inngest-js/commit/0039df55fd8753044bed5cc4429e63ed4e3a694f) Thanks [@jpwilliams](https://github.com/jpwilliams)! - Environment values passed to `step.sandbox` calls such as `commands.run`, `processes.start` and `create` no longer appear in the run trace; only the variable names are recorded. The sandbox still receives the real values. For tokens, prefer `secrets` on `create`, which injects workspace secrets without exposing them.
+
+- [#1829](https://github.com/inngest/inngest-js/pull/1829) [`9c00b9f8`](https://github.com/inngest/inngest-js/commit/9c00b9f8ac298b634b303fd9d4b436c9ddef3f06) Thanks [@jpwilliams](https://github.com/jpwilliams)! - Sandbox command output shows as readable text in traces.
+
 ## 4.25.0
 
 ### Minor Changes
